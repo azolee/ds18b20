@@ -1,0 +1,21 @@
+{
+    "name": "azolee/ds18b20",
+    "description": "The DS18B20 Sensor Handling PHP Package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "András Zoltan-Gyárfás",
+            "email": "azolee@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "azolee": "src/"
+        }
+    }
+}
+
