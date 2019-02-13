@@ -36,7 +36,7 @@ var_dump($respone);
 
 
 // in Fahrenheit
-$fahrenheitDataProcessor = new CelsiusDataProcessor();
+$fahrenheitDataProcessor = new FahrenheitDataProcessor();
 $fahrenheitDataProcessor->setPrecision(0);
 
 DS18B20::setProcessor($fahrenheitDataProcessor);
