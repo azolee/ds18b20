@@ -9,7 +9,7 @@ Note: Previously the Raspibian needs to be configured to handle the sensor.
 
 ## Example usage (See _tests_ folder)
 
-###Read the raw data:
+### Read the raw data:
 ```php
 use azolee\DS18B20;
 
@@ -18,7 +18,7 @@ $respone =  DS18B20::loadSensors();
 var_dump($respone);
 ```
 
-###Read the raw data and process it:
+### Read the raw data and process it:
 
 
 ```php
