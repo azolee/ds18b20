@@ -5,7 +5,6 @@ use azolee\Contracts\SenzorDataProcessor;
 
 class DS18B20
 {
-    protected const SENSORS_LIST_FILE_NAME = "/sys/bus/w1/devices/w1_bus_master1/w1_master_slaves";
     protected static $dataProcessor;
     protected static $microTimeGetAsFloat = true;
 
@@ -31,17 +30,23 @@ class DS18B20
 
     public static function loadSensorList()
     {
+        $folders = glob('/sys/bus/w1/devices/w1_bus_master*', GLOB_ONLYDIR);
+
         $result = [];
 
-        if(file_exists(self::SENSORS_LIST_FILE_NAME)){
-            $result = file(self::SENSORS_LIST_FILE_NAME);
+        foreach($folders as $bus){
+            $local = [];
+
+            if(file_exists($bus.'/w1_master_slaves')){
+                $local = file($bus.'/w1_master_slaves');
+            }
+
+            array_walk($local, function(&$item){
+                $item = trim($item);
+            });
+
+            $result = array_merge($result, $local);
         }
-
-        array_walk($result, function(&$item){
-
-            $item = trim($item);
-
-        });
 
         return $result;
     }
@@ -52,8 +57,8 @@ class DS18B20
 
         $sensorHandle = fopen($sensorFile, "r");
         $sensorReading = fread($sensorHandle, filesize($sensorFile));
-	    $time = microtime(self::$microTimeGetAsFloat);
-	    fclose($sensorHandle);
+        $time = microtime(self::$microTimeGetAsFloat);
+        fclose($sensorHandle);
 
         preg_match("/t=(.+)/", preg_split("/\n/", $sensorReading)[1], $matches);
 
